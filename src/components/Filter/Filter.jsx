@@ -1,23 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import { Wrapper, Label, SearchInput } from './Filter.styled';
+import { setFilter } from 'redux/filterSlice';
 
-export const Filter = ({ handleChange, value }) => {
+export const Filter = () => {
+  const dispatch = useDispatch();
+  const filter = useSelector(state => state.filter);
+  const handleChangeFilter = event => {
+    dispatch(setFilter(event.currentTarget.value));
+  };
+
   return (
     <Wrapper>
       <Label htmlFor="">
         Search name
         <SearchInput
-          onChange={handleChange}
-          value={value}
+          onChange={handleChangeFilter}
+          value={filter}
           placeholder="Search"
         />
       </Label>
     </Wrapper>
   );
-};
-
-Filter.propTypes = {
-  handleChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
 };
